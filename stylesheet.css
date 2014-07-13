@@ -1,0 +1,22 @@
+* {
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+  font-size: 13;
+}
+
+#textarea {
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+}
+
+div {
+  padding: 10px;
+  border-style: solid;
+  border-color: black;
+  margin: 10px;
+  display: inline-block;
+}
