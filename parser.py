@@ -16,12 +16,12 @@ def parse(req, string):
 			b += char
 	b += '</div>'
 
-class CodeBlock(object):
-	def __init__(self):
-		self.x = None
-		self.y = None
-		self.origin = None
-		self.children = None
+	class CodeBlock(object):
+		def __init__(self):
+			self.x = None
+			self.y = None
+			self.origin = None
+			self.children = None
 
 #	for c in a:
 #		if c == (' ' or '\n'):
