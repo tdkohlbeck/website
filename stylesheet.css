@@ -45,6 +45,6 @@ textarea {
   100% { -webkit-transform: scaleY(0.9) scaleX(1.1) skewX(10deg) translate(-300%, 0%) }
 }
 
-.terminal:onsubmit {
+.terminal:hover {
   -webkit-animation: pop_away 0.9s;
 }
