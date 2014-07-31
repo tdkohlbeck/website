@@ -40,11 +40,11 @@ textarea {
   outline: none;
 }
 
-@-webkit-keyframes send_off {
-  0%  { translate(100px, 0) }
-  20% { translate(-50%, 0%) }
+@-webkit-keyframes pop_away {
+  40%  { -webkit-transform: scaleY(1.05) scaleX(0.95) translate(100px, 0);}
+  100% { -webkit-transform: scaleY(0.9) scaleX(1.1) skewX(10deg) translate(-300%, 0%) }
 }
 
-.terminal:hover {
-  -webkit-animation: send_off 2s infinite;
+.terminal:onsubmit {
+  -webkit-animation: pop_away 0.9s;
 }
