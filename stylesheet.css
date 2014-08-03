@@ -4,16 +4,17 @@ html, body {
   background-color: #f0f0f0;
 }
 
-.terminal {
+
+#terminal {
   position: fixed;
   left: 50%;
   margin-left: -292px;
   bottom: 100px;
-  border-radius: 5px 5px 0px 0px;
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.4);
+  border-radius: 5px 5px 0px 0px;
 }
 
-.terminal .menu_bar {
+#terminal #menu_bar {
   background: linear-gradient(#e8e8e8, #b9b9b9);
   height: 17px;
   border-radius: 5px 5px 0px 0px;
@@ -26,7 +27,18 @@ html, body {
   text-shadow: 1px 1px #dee0e3;
 }
 
-.terminal .window {
+#menu_bar #submit_button {
+  cursor: pointer;
+  float: right;
+  width: 13px;
+  height: 13px;
+  background-color: #b9b9b9;
+  margin-right: 3px;
+  border-radius: 3px;
+  border: 1px solid #e8e8e8;
+}
+
+#terminal #window {
   background-color: black;
 }
 
@@ -41,10 +53,8 @@ textarea {
 }
 
 @-webkit-keyframes pop_away {
-  40%  { -webkit-transform: scaleY(1.05) scaleX(0.95) translate(100px, 0);}
-  100% { -webkit-transform: scaleY(0.9) scaleX(1.1) skewX(10deg) translate(-300%, 0%) }
-}
-
-.terminal:hover {
-  -webkit-animation: pop_away 0.9s;
+  40%  { -webkit-transform: scaleY(1.06) scaleX(0.94) translate(60px, 0);
+         -webkit-filter: blur(0px); }
+  100% { -webkit-transform: scaleY(0.5) scaleX(1.5) skewX(10deg) translate(-300%, 0%);
+         -webkit-filter: blur(20px);  }
 }

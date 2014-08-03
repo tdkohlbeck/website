@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Codetographer</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="stylesheet.css"
+    >
+    <script src="codetographer.js"></script>
+  </head>
+  <body>
+    <div id="terminal">
+      <div id="menu_bar">
+        Codetographer
+        <div id="submit_button"></div> 
+      </div>
+      <div id="window">
+        <textarea rows="25" cols="80">yay</textarea>
+      </div>
+    </div>
+	</body>
+</html>
