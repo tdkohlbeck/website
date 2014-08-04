@@ -8,7 +8,7 @@ html, body {
 #terminal {
   position: fixed;
   left: 50%;
-  margin-left: -292px;
+  margin-left: -292px; /* center the terminal in the window */
   bottom: 100px;
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.4);
   border-radius: 5px 5px 0px 0px;
@@ -52,9 +52,23 @@ textarea {
   outline: none;
 }
 
+/* terminal flies off screen when submitted */
 @-webkit-keyframes pop_away {
   40%  { -webkit-transform: scaleY(1.06) scaleX(0.94) translate(60px, 0);
          -webkit-filter: blur(0px); }
   100% { -webkit-transform: scaleY(0.5) scaleX(1.5) skewX(10deg) translate(-300%, 0%);
          -webkit-filter: blur(20px);  }
+}
+
+/* trigger animation in javascript by assigning class */
+.animate {
+  -webkit-animation: pop_away 0.7s;
+  -webkit-animation-fill-mode: forwards; /* stay put when done */
+}
+
+#sidebar {
+  float: left;
+  height: 100%;
+  width: 100px;
+  background-color: black;
 }
