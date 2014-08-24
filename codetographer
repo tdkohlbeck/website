@@ -15,7 +15,7 @@
         <div id="submit_button"></div> 
       </div>
       <div id="window">
-        <textarea rows="25" cols="80">yay</textarea>
+        <textarea class="code_text" rows="25" cols="80">yay</textarea>
       </div>
     </div>
 	</body>

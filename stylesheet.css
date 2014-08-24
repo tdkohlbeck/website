@@ -42,7 +42,7 @@ html, body {
   background-color: black;
 }
 
-textarea {
+.code_text {
   font-family: "Courier New", Courier, monospace;
   font-size: 8pt;
   color: white;
@@ -54,16 +54,32 @@ textarea {
 
 /* terminal flies off screen when submitted */
 @-webkit-keyframes pop_away {
-  40%  { -webkit-transform: scaleY(1.06) scaleX(0.94) translate(60px, 0);
-         -webkit-filter: blur(0px); }
-  100% { -webkit-transform: scaleY(0.5) scaleX(1.5) skewX(10deg) translate(-300%, 0%);
-         -webkit-filter: blur(20px);  }
+  50%  { -webkit-transform: scaleY(1.06) 
+                            scaleX(0.94) 
+                            translate(60px, 0);
+  }
+  100% { -webkit-transform: scaleY(0.5) 
+                            scaleX(1.5) 
+                            skewX(10deg)
+                            translate(-200%, 0%);
+  }
+}
+
+@-webkit-keyframes show_sidebar {
+  0%   { width: 0px;   }
+  100% { width: 200px; }
 }
 
 /* trigger animation in javascript by assigning class */
-.animate {
+.animate_pop_away {
   -webkit-animation: pop_away 0.7s;
   -webkit-animation-fill-mode: forwards; /* stay put when done */
+}
+
+.animate_show_sidebar {
+  -webkit-animation: show_sidebar .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 #sidebar {
