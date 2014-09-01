@@ -13,7 +13,7 @@ window.onload = function() {
 // create and load sidebar
 function sidebarCreateAndLoad() {
   var sidebar = document.createElement("div");
-  var terminalWindow = document.getElementById("window");
+  var terminalWindow = document.getElementById("term_text");
   var userInput = document.createTextNode(terminalWindow.value);
 
   sidebar.id = "sidebar";

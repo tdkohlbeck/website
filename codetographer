@@ -4,19 +4,22 @@
     <title>Codetographer</title>
     <link rel="stylesheet"
           type="text/css"
-          href="stylesheet.css"
-    >
+          href="stylesheet.css">
     <script src="codetographer.js"></script>
   </head>
   <body>
+    <div id="term_container">
     <div id="terminal">
-      <div id="menu_bar">
-        Codetographer
-        <div id="submit_button"></div> 
+      <div id="menu_bar">Codetographer<div id="submit_button"></div> 
       </div>
       <div id="window">
-        <textarea class="code_text" rows="25" cols="80">yay</textarea>
+        <textarea id="term_text"
+                  class="code_text"
+                  rows=25;
+                  cols=80;
+                  placeholder="yay"></textarea>
       </div>
+    </div>
     </div>
 	</body>
 </html>

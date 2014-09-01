@@ -1,22 +1,32 @@
+* {
+  -webkit-box-sizing: border-box; 
+}
+
 html, body {
   margin: 0;
   height: 100%;
   background-color: #f0f0f0;
 }
 
+/* lock terminal position to bottom of viewport */
+#term_container {
+  position: fixed;
+  width: 100%;
+  top: 100%;
+  margin-top: -450px;
+}
 
 #terminal {
-  position: fixed;
-  left: 50%;
-  margin-left: -292px; /* center the terminal in the window */
-  bottom: 100px;
+  position: relative;
+  width: 501px; /* fit 80 columns of text */
+  margin: 0 auto;
   box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.4);
   border-radius: 5px 5px 0px 0px;
 }
 
 #terminal #menu_bar {
   background: linear-gradient(#e8e8e8, #b9b9b9);
-  height: 17px;
+  height: 21px;
   border-radius: 5px 5px 0px 0px;
   border: 1px solid rgba(128, 128, 128, 0.3);
   font-family: Helvetica, Arial, sans-serif;
@@ -66,8 +76,7 @@ html, body {
 }
 
 @-webkit-keyframes show_sidebar {
-  0%   { width: 0px;   }
-  100% { width: 200px; }
+  100% { -webkit-transform: translate(200px, 0) }
 }
 
 /* trigger animation in javascript by assigning class */
@@ -78,13 +87,16 @@ html, body {
 
 .animate_show_sidebar {
   -webkit-animation: show_sidebar .5s;
-  -webkit-animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards; /* stay put when done */
+  /*animation-timing-function: ease-out;*/
 }
 
 #sidebar {
-  float: left;
+  position: relative;
+  left: -200px;
+  padding: 10px;
   height: 100%;
-  width: 100px;
+  width: 200px;
   background-color: black;
+  word-wrap: break-word;
 }
