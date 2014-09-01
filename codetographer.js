@@ -13,11 +13,12 @@ window.onload = function() {
 // create and load sidebar
 function sidebarCreateAndLoad() {
   var sidebar = document.createElement("div");
-  var terminalWindow = document.getElementById("term_text");
-  var userInput = document.createTextNode(terminalWindow.value);
+  var userInput = document.getElementById("user_input").value;
+  code = userInput.replace(/\r?\n/g, '\n');
+  var code = document.createTextNode(code);
 
   sidebar.id = "sidebar";
-  sidebar.appendChild(userInput);
+  sidebar.appendChild(code);
   document.body.appendChild(sidebar);
   sidebar.className = "code_text animate_show_sidebar";
 }

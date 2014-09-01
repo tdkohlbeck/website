@@ -62,35 +62,6 @@ html, body {
   outline: none;
 }
 
-/* terminal flies off screen when submitted */
-@-webkit-keyframes pop_away {
-  50%  { -webkit-transform: scaleY(1.06) 
-                            scaleX(0.94) 
-                            translate(60px, 0);
-  }
-  100% { -webkit-transform: scaleY(0.5) 
-                            scaleX(1.5) 
-                            skewX(10deg)
-                            translate(-200%, 0%);
-  }
-}
-
-@-webkit-keyframes show_sidebar {
-  100% { -webkit-transform: translate(200px, 0) }
-}
-
-/* trigger animation in javascript by assigning class */
-.animate_pop_away {
-  -webkit-animation: pop_away 0.7s;
-  -webkit-animation-fill-mode: forwards; /* stay put when done */
-}
-
-.animate_show_sidebar {
-  -webkit-animation: show_sidebar .5s;
-  -webkit-animation-fill-mode: forwards; /* stay put when done */
-  /*animation-timing-function: ease-out;*/
-}
-
 #sidebar {
   position: relative;
   left: -200px;
