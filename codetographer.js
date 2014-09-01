@@ -8,17 +8,27 @@ window.onload = function() {
     //wait duration of pop_away then create and load sidebar
     setTimeout(function(){ sidebarCreateAndLoad() }, 1200);
   };
+  
+
 }
 
 // create and load sidebar
 function sidebarCreateAndLoad() {
   var sidebar = document.createElement("div");
-  var userInput = document.getElementById("user_input").value;
-  code = userInput.replace(/\r?\n/g, '\n');
-  var code = document.createTextNode(code);
-
   sidebar.id = "sidebar";
-  sidebar.appendChild(code);
+
+  var userInput = document.getElementById("user_input").value;
+  var code = document.createTextNode(userInput);
+  var elementPre = document.createElement("pre");
+
+  sidebar.appendChild(elementPre).appendChild(code);
   document.body.appendChild(sidebar);
   sidebar.className = "code_text animate_show_sidebar";
+}
+
+// TODO: get code ready for parsing
+function cleanForParser() {
+  var cleanCode = document.getElementById("user_input").value;
+  cleanCode = cleanCode.replace(" ", "");
+  console.log(cleanCode);
 }

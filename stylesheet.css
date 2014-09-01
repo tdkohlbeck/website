@@ -8,6 +8,10 @@ html, body {
   background-color: #f0f0f0;
 }
 
+pre {
+  margin: 0;
+}
+
 /* lock terminal position to bottom of viewport */
 #term_container {
   position: fixed;
