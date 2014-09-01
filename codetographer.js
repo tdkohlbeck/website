@@ -4,20 +4,22 @@ window.onload = function() {
   var terminal = document.getElementById("terminal");
 
   button.onclick = function() {
+    var userInput = document.getElementById("user_input").value;
+    var userInputParsed = codeParser(userInput);
+
     terminal.className = "animate_pop_away";
     //wait duration of pop_away then create and load sidebar
-    setTimeout(function(){ sidebarCreateAndLoad() }, 1200);
+    setTimeout(function(){ sidebarCreateAndLoad(userInputParsed) }, 1200);
   };
   
 
 }
 
 // create and load sidebar
-function sidebarCreateAndLoad() {
+function sidebarCreateAndLoad(userInput) {
   var sidebar = document.createElement("div");
   sidebar.id = "sidebar";
 
-  var userInput = document.getElementById("user_input").value;
   var code = document.createTextNode(userInput);
   var elementPre = document.createElement("pre");
 
@@ -26,9 +28,37 @@ function sidebarCreateAndLoad() {
   sidebar.className = "code_text animate_show_sidebar";
 }
 
-// TODO: get code ready for parsing
-function cleanForParser() {
-  var cleanCode = document.getElementById("user_input").value;
-  cleanCode = cleanCode.replace(" ", "");
-  console.log(cleanCode);
+// run through code, apply syntax highlighting, and generate data structure
+function codeParser(userInput) {
+  var charCount = userInput.length;
+  var preBuffer = new Array();
+  var postBuffer = new Array();
+  var resetLength = 0;
+
+  // iterate over code, storing temp strings before and after index position
+  for (i=0; i < charCount; i++) {
+    preBuffer[i-resetLength] = userInput[i];
+    postBuffer[0] = userInput[i+1];
+
+    console.log(i + ": \"" + userInput[i] + "\"");
+    console.log("pre: \"" + preBuffer + "\"");
+    console.log("post: \"" + postBuffer + "\"");
+    
+    if (userInput[i] == "\n") {
+      preBuffer.pop();
+    }
+
+    // if post encounters the end of a word, determine prior word
+    if (userInput[i] == " ") {
+      if (preBuffer.join("") == "int ") {
+        userInput = userInput.slice(0, i+1) + "yay " + userInput.slice(i+1);
+        console.log("yay");
+      }
+      preBuffer.length = 0;
+      resetLength = i+1;
+      console.log("resetLength: " + resetLength);
+    }
+  } 
+  return userInput;
 }
+
