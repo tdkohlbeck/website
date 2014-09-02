@@ -34,6 +34,7 @@ function codeParser(userInput) {
   var preBuffer = new Array();
   var postBuffer = new Array();
   var resetLength = 0;
+  var blockCount = 0;
 
   // iterate over code, storing temp strings before and after index position
   for (i=0; i < charCount; i++) {
@@ -51,12 +52,23 @@ function codeParser(userInput) {
     // if post encounters the end of a word, determine prior word
     if (userInput[i] == " ") {
       if (preBuffer.join("") == "int ") {
-        userInput = userInput.slice(0, i+1) + "yay " + userInput.slice(i+1);
         console.log("yay");
       }
       preBuffer.length = 0;
       resetLength = i+1;
       console.log("resetLength: " + resetLength);
+    }
+
+    if (userInput[i] == "{") {
+      blockCount += 1;
+      var codeBlock = document.createElement("div");
+      codeBlockCurrentId = "test_block" + blockCount;
+      codeBlock.id = codeBlockCurrentId;
+      if (blockCount == 1) {
+        document.body.appendChild(codeBlock);
+      } else {
+        document.getElementById("test_block1").appendChild(codeBlock);
+      }
     }
   } 
   return userInput;

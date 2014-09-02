@@ -67,11 +67,30 @@ pre {
 }
 
 #sidebar {
-  position: relative;
+  position: fixed;
+  top: 0px;
   left: -200px;
   padding: 10px;
   height: 100%;
   width: 200px;
   background-color: black;
   word-wrap: break-word;
+}
+
+#test_block1 {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  background-color: blue;
+}
+
+#test_block2 {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 20%;
+  left: 20%;
+  background-color: lightblue;
 }
