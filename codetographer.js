@@ -17,13 +17,14 @@ window.onload = function() {
 
 // create and load sidebar
 function sidebarCreateAndLoad(userInput) {
-  var sidebar = document.createElement("div");
+  var sidebar = document.createElement("pre");
   sidebar.id = "sidebar";
 
-  var code = document.createTextNode(userInput);
-  var elementPre = document.createElement("pre");
+//  var code = document.createTextNode(userInput);
+//  var elementPre = document.createElement("pre");
 
-  sidebar.appendChild(elementPre).appendChild(code);
+//  sidebar.appendChild(elementPre).appendChild(code);
+  sidebar.appendChild(userInput);
   document.body.appendChild(sidebar);
   sidebar.className = "code_text animate_show_sidebar";
 }
@@ -31,30 +32,35 @@ function sidebarCreateAndLoad(userInput) {
 // run through code, apply syntax highlighting, and generate data structure
 function codeParser(userInput) {
   var charCount = userInput.length;
-  var preBuffer = new Array();
-  var postBuffer = new Array();
+  var buffer = new Array();
   var resetLength = 0;
   var blockCount = 0;
+  var codeOutput = document.createElement("div");
 
   // iterate over code, storing temp strings before and after index position
-  for (i=0; i < charCount; i++) {
-    preBuffer[i-resetLength] = userInput[i];
-    postBuffer[0] = userInput[i+1];
+  for (i = 0; i < charCount; i++) {
 
     console.log(i + ": \"" + userInput[i] + "\"");
-    console.log("pre: \"" + preBuffer + "\"");
-    console.log("post: \"" + postBuffer + "\"");
+    console.log("buffer: \"" + buffer + "\"");
     
-    if (userInput[i] == "\n") {
-      preBuffer.pop();
-    }
+//    if (userInput[i] == "\n") {
+//      buffer.pop();
+//    }
 
     // if post encounters the end of a word, determine prior word
-    if (userInput[i] == " ") {
-      if (preBuffer.join("") == "int ") {
+    if (userInput[i] == " " || userInput[i] == "\n") {
+      if (buffer.join("") == "int") {
         console.log("yay");
+        var code = document.createTextNode("int" + userInput[i]);
+        varSyntaxHL = document.createElement("span");
+        varSyntaxHL.appendChild(code);
+        varSyntaxHL.className = "code_syntax_var";
+        codeOutput.appendChild(varSyntaxHL);
+      } else {
+        var code = document.createTextNode(buffer.join("") + userInput[i]);
+        codeOutput.appendChild(code);
       }
-      preBuffer.length = 0;
+      buffer.length = 0;
       resetLength = i+1;
       console.log("resetLength: " + resetLength);
     }
@@ -70,7 +76,8 @@ function codeParser(userInput) {
         document.getElementById("test_block1").appendChild(codeBlock);
       }
     }
+    buffer[i-resetLength] = userInput[i];
   } 
-  return userInput;
+  return codeOutput;
 }
 
