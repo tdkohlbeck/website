@@ -19,11 +19,6 @@ window.onload = function() {
 function sidebarCreateAndLoad(userInput) {
   var sidebar = document.createElement("pre");
   sidebar.id = "sidebar";
-
-//  var code = document.createTextNode(userInput);
-//  var elementPre = document.createElement("pre");
-
-//  sidebar.appendChild(elementPre).appendChild(code);
   sidebar.appendChild(userInput);
   document.body.appendChild(sidebar);
   sidebar.className = "code_text animate_show_sidebar";
@@ -39,19 +34,11 @@ function codeParser(userInput) {
 
   // iterate over code, storing temp strings before and after index position
   for (i = 0; i < charCount; i++) {
-
-    console.log(i + ": \"" + userInput[i] + "\"");
-    console.log("buffer: \"" + buffer + "\"");
-    
-//    if (userInput[i] == "\n") {
-//      buffer.pop();
-//    }
-
     // if post encounters the end of a word, determine prior word
     if (userInput[i] == " " || userInput[i] == "\n") {
-      if (buffer.join("") == "int") {
-        console.log("yay");
-        var code = document.createTextNode("int" + userInput[i]);
+      var codeWord = buffer.join("");
+      if (codeObj.C.variable.indexOf(codeWord) != -1) {
+        var code = document.createTextNode(codeWord + userInput[i]);
         varSyntaxHL = document.createElement("span");
         varSyntaxHL.appendChild(code);
         varSyntaxHL.className = "code_syntax_var";
