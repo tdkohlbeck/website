@@ -5,66 +5,82 @@ window.onload = function() {
 
   button.onclick = function() {
     var userInput = document.getElementById("user_input").value;
-    var userInputParsed = codeParser(userInput);
+    var parsedCode = codeParser(userInput);
 
     terminal.className = "animate_pop_away";
     //wait duration of pop_away then create and load sidebar
-    setTimeout(function(){ sidebarCreateAndLoad(userInputParsed) }, 1200);
+    setTimeout(function(){ triggerSidebar(parsedCode) }, 1200);
   };
   
 
 }
 
 // create and load sidebar
-function sidebarCreateAndLoad(userInput) {
-  var sidebar = document.createElement("pre");
-  sidebar.id = "sidebar";
-  sidebar.appendChild(userInput);
-  document.body.appendChild(sidebar);
-  sidebar.className = "code_text animate_show_sidebar";
+function triggerSidebar(code) {
+  createNode("div", //element
+             document.body, //parent
+             "code_text animate_show_sidebar", //class
+             "sidebar", //id
+             code //text node
+  );  
 }
 
 // run through code, apply syntax highlighting, and generate data structure
-function codeParser(userInput) {
-  var charCount = userInput.length;
+function codeParser(codeInput) {
+  var charCount = codeInput.length;
   var buffer = new Array();
-  var resetLength = 0;
-  var blockCount = 0;
-  var codeOutput = document.createElement("div");
+  var currentPos = 0;
+  var codeOutput = createNode("pre");
 
-  // iterate over code, storing temp strings before and after index position
   for (i = 0; i < charCount; i++) {
-    // if post encounters the end of a word, determine prior word
-    if (userInput[i] == " " || userInput[i] == "\n") {
+    // encounter delimiter?
+    if (codeObj.general.delimiters.indexOf(codeInput[i]) != -1) {
       var codeWord = buffer.join("");
+      var codeWordNode = document.createTextNode(codeWord + codeInput[i]);
       if (codeObj.C.variable.indexOf(codeWord) != -1) {
-        var code = document.createTextNode(codeWord + userInput[i]);
-        varSyntaxHL = document.createElement("span");
-        varSyntaxHL.appendChild(code);
-        varSyntaxHL.className = "code_syntax_var";
-        codeOutput.appendChild(varSyntaxHL);
+        createNode("span", codeOutput, "syntax_var", null, codeWordNode);
+      } else if (codeObj.C.logic.indexOf(codeWord) != -1) {
+        createNode("span", codeOutput, "syntax_logic", null, codeWordNode);
       } else {
-        var code = document.createTextNode(buffer.join("") + userInput[i]);
-        codeOutput.appendChild(code);
+        var codeWord = document.createTextNode(codeWord + codeInput[i]);
+        codeOutput.appendChild(codeWord);
       }
       buffer.length = 0;
-      resetLength = i+1;
-      console.log("resetLength: " + resetLength);
+      currentPos = i+1;
     }
-
-    if (userInput[i] == "{") {
-      blockCount += 1;
-      var codeBlock = document.createElement("div");
-      codeBlockCurrentId = "test_block" + blockCount;
-      codeBlock.id = codeBlockCurrentId;
-      if (blockCount == 1) {
-        document.body.appendChild(codeBlock);
-      } else {
-        document.getElementById("test_block1").appendChild(codeBlock);
-      }
-    }
-    buffer[i-resetLength] = userInput[i];
+    buffer[i-currentPos] = codeInput[i];
   } 
   return codeOutput;
 }
 
+function createNode(element, parentNode, className, id, text) {
+  var args = arguments.length;
+  if (args == 0) {
+    console.log("We require more arguments!");
+    return -1;
+  }
+  if (args >= 1) {
+    elementNode = document.createElement(element);
+    if (args == 1) {
+      return elementNode;
+    }
+  }
+  if (args >= 2) {
+    elementNode = document.createElement(element);
+    parentNode.appendChild(elementNode);
+  }
+  if (args >= 3) {
+    elementNode.className = className;
+  }
+  if (args >= 4) {
+    elementNode.id = id;
+  }
+  if (args == 5) {
+    elementNode.appendChild(text);
+  }
+  if (args > 5) {
+    console.log("Too many arguments!");
+    return -1;
+  }
+  return 0;
+} 
