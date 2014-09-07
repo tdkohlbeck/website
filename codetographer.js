@@ -2,20 +2,18 @@
 window.onload = function() {
   var button = document.getElementById("submit_button");
   var terminal = document.getElementById("terminal");
+  var ctx = document.getElementById("canvas").getContext("2d");
+  var TreeRoot = new TreeNode;
 
   button.onclick = function() {
     var userInput = document.getElementById("user_input").value;
     var parsedCode = codeParser(userInput);
 
     terminal.className = "animate_pop_away";
-    //wait duration of pop_away then create and load sidebar
     setTimeout(function(){ triggerSidebar(parsedCode) }, 1200);
   };
-  
-
 }
 
-// create and load sidebar
 function triggerSidebar(code) {
   createNode("div", //element
              document.body, //parent
@@ -25,7 +23,6 @@ function triggerSidebar(code) {
   );  
 }
 
-// run through code, apply syntax highlighting, and generate data structure
 function codeParser(codeInput) {
   var charCount = codeInput.length;
   var buffer = new Array();
@@ -34,9 +31,24 @@ function codeParser(codeInput) {
 
   for (i = 0; i < charCount; i++) {
     // encounter delimiter?
-    if (codeObj.general.delimiters.indexOf(codeInput[i]) != -1) {
+    if (codeObj.general.delim.indexOf(codeInput[i]) != -1) {
       var codeWord = buffer.join("");
       var codeWordNode = document.createTextNode(codeWord + codeInput[i]);
+
+      if (codeInput[i] == "("
+          && codeObj.C.logic.indexOf(codeWord) == -1
+          && codeObj.general.delim.indexOf(codeWord) == -1) {
+
+        var Node = new TreeNode;
+        Node.Name = codeWord;
+        Node.X = 200;
+        Node.Y = 200;
+        Node.Width = 300;
+        Node.Height = 100;
+        Node.Value = "yay";
+        Node.Parent = TreeRoot;
+        console.log(Node);
+      } 
       if (codeObj.C.variable.indexOf(codeWord) != -1) {
         createNode("span", codeOutput, "syntax_var", null, codeWordNode);
       } else if (codeObj.C.logic.indexOf(codeWord) != -1) {
@@ -84,3 +96,19 @@ function createNode(element, parentNode, className, id, text) {
   }
   return 0;
 } 
+
+function TreeNode() {
+  this.Name = null;
+  this.Value = null;
+
+  this.X = 0;
+  this.Y = 0;
+  this.Width = 0;
+  this.Height = 0;
+
+  this.Parent = null;
+  this.Child = new Array();
+  this.Sibling = new Array();
+}  
+
+

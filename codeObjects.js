@@ -1,6 +1,6 @@
 var codeObj = {
   general: {
-    "delimiters": [
+    "delim": [
       " ", "\n",
       "(", "{",
       "["
