@@ -15,7 +15,6 @@
   100% { -webkit-transform: translate(200px, 0) }
 }
 
-/* trigger animation in javascript by assigning class */
 .animate_pop_away {
   -webkit-animation: pop_away 0.7s;
   -webkit-animation-fill-mode: forwards; /* stay put when done */

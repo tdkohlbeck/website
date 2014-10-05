@@ -1,71 +1,71 @@
 // main
 window.onload = function() {
-  var button = document.getElementById("submit_button");
-  var terminal = document.getElementById("terminal");
-  var ctx = document.getElementById("canvas").getContext("2d");
-  var TreeRoot = new TreeNode;
+  var button = id("submit_button");
+  var terminal = id("terminal");
 
   button.onclick = function() {
-    var userInput = document.getElementById("user_input").value;
-    var parsedCode = codeParser(userInput);
+    var input = id("user_input").value;
+    var parsedCode = parser(input);
 
     terminal.className = "animate_pop_away";
-    setTimeout(function(){ triggerSidebar(parsedCode) }, 1200);
+    setTimeout(
+      function() {
+        triggerSidebar(parsedCode)
+      },
+      1200
+    );
   };
 }
 
 function triggerSidebar(code) {
-  createNode("div", //element
-             document.body, //parent
-             "code_text animate_show_sidebar", //class
-             "sidebar", //id
-             code //text node
+  var codeTextNode = createNode("pre");
+  codeTextNode.innerHTML = code;
+  //codeTextNode.appendChild(document.createTextNode(code));
+  createNode(
+    "div", //element
+    document.body, //parent
+    "code_text animate_show_sidebar", //class
+    "sidebar", //id
+    codeTextNode //text node
   );  
 }
 
-function codeParser(codeInput) {
+function parser(codeInput) {
   var charCount = codeInput.length;
   var buffer = new Array();
-  var currentPos = 0;
-  var codeOutput = createNode("pre");
+  var bufferPos = 0;
+  var codeOutput = new String(); //createNode("pre");
 
   for (i = 0; i < charCount; i++) {
-    // encounter delimiter?
-    if (codeObj.general.delim.indexOf(codeInput[i]) != -1) {
+    currChar = codeInput[i];
+
+    if (general.delim.contains(currChar)) {
       var codeWord = buffer.join("");
-      var codeWordNode = document.createTextNode(codeWord + codeInput[i]);
-
-      if (codeInput[i] == "("
-          && codeObj.C.logic.indexOf(codeWord) == -1
-          && codeObj.general.delim.indexOf(codeWord) == -1) {
-
-        var Node = new TreeNode;
-        Node.Name = codeWord;
-        Node.X = 200;
-        Node.Y = 200;
-        Node.Width = 300;
-        Node.Height = 100;
-        Node.Value = "yay";
-        Node.Parent = TreeRoot;
-        console.log(Node);
-      } 
-      if (codeObj.C.variable.indexOf(codeWord) != -1) {
-        createNode("span", codeOutput, "syntax_var", null, codeWordNode);
-      } else if (codeObj.C.logic.indexOf(codeWord) != -1) {
-        createNode("span", codeOutput, "syntax_logic", null, codeWordNode);
-      } else {
-        var codeWord = document.createTextNode(codeWord + codeInput[i]);
-        codeOutput.appendChild(codeWord);
+      
+      if (C.variable.contains(codeWord)) {
+        codeWord = "<span class=\"syntax_var\">" + codeWord + "</span>";
+      } else if (C.logic.contains(codeWord)) {
+        codeWord = "<span class=\"syntax_logic\">" + codeWord + "</span>";
       }
-      buffer.length = 0;
-      currentPos = i+1;
+      codeOutput += codeWord + currChar; 
+
+      buffer = [];
+      bufferPos = 0;
+    } else {
+      buffer[bufferPos] = currChar;
+      bufferPos++;
     }
-    buffer[i-currentPos] = codeInput[i];
   } 
   return codeOutput;
 }
 
-function createNode(element, parentNode, className, id, text) {
+function createNode(
+  element,
+  parentNode,
+  className,
+  id,
+  text
+) {
   var args = arguments.length;
   if (args == 0) {
     console.log("We require more arguments!");
@@ -78,7 +78,6 @@ function createNode(element, parentNode, className, id, text) {
     }
   }
   if (args >= 2) {
-    elementNode = document.createElement(element);
     parentNode.appendChild(elementNode);
   }
   if (args >= 3) {
@@ -97,6 +96,10 @@ function createNode(element, parentNode, className, id, text) {
   return 0;
 } 
 
+function id(str) {
+  return document.getElementById(str);
+}
+
 function TreeNode() {
   this.Name = null;
   this.Value = null;
@@ -111,4 +114,39 @@ function TreeNode() {
   this.Sibling = new Array();
 }  
 
-
+// Polyfill for array.contains()
+if (![].contains) {
+  Object.defineProperty(Array.prototype, 'contains', {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value: function(searchElement/*, fromIndex*/) {
+      if (this === undefined || this === null) {
+        throw new TypeError('Cannot convert this value to object');
+      }
+      var O = Object(this);
+      var len = parseInt(O.length) || 0;
+      if (len === 0) { return false; }
+      var n = parseInt(arguments[1]) || 0;
+      if (n >= len) { return false; }
+      var k;
+      if (n >= 0) {
+        k = n;
+      } else {
+        k = len + n;
+        if (k < 0) k = 0;
+      }
+      while (k < len) {
+        var currentElement = O[k];
+        if (searchElement === currentElement ||
+            searchElement !== searchElement &&
+            currentElement !== currentElement
+        ) {
+          return true;
+        }
+        k++;
+      }
+      return false;
+    }
+  });
+}

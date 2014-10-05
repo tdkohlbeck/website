@@ -46,7 +46,7 @@ canvas {
   text-shadow: 1px 1px #dee0e3;
 }
 
-#menu_bar #submit_button {
+#terminal #submit_button {
   cursor: pointer;
   float: right;
   width: 13px;
