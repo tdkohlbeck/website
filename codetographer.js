@@ -45,14 +45,9 @@ function parser(codeInput) {
       var codeWord = buffer.join("");
       
       if (C.variable.contains(codeWord)) {
-        var text = document.createTextNode(codeOutput);
-        outputNode.appendChild(text);
-        var highlight = createNode("span");
-        highlight.className = "var";
-        var codeWord = document.createTextNode(codeWord + currChar);
-        highlight.appendChild(codeWord);
-        outputNode.appendChild(highlight); 
-        codeOutput = new String();
+        highlight("var", codeWord, currChar);
+      } else if (C.logic.contains(codeWord)) {
+        highlight("logic", codeWord, currChar);
       } else {
       //} else if (C.logic.contains(codeWord)) {
       //  codeWord = "<span class=\"logic\">" + codeWord + "</span>";
@@ -70,6 +65,18 @@ function parser(codeInput) {
   codeOutput = document.createTextNode(codeOutput);
   outputNode.appendChild(codeOutput);
   return outputNode;
+  
+  // attach, highlight, then clear code text
+  function highlight(type, word, character) {
+    var codeNode = textNode(codeOutput);
+    outputNode.appendChild(codeNode);
+    var span = createNode("span");
+    span.className = type;
+    var word = textNode(word + character);
+    span.appendChild(word);
+    outputNode.appendChild(span);
+    codeOutput = new String();
+  }
 }
 
 function createNode(
@@ -112,6 +119,10 @@ function createNode(
   
 function id(str) {
   return document.getElementById(str);
+}
+
+function textNode(str) {
+  return document.createTextNode(str);
 }
 
 function TreeNode() {
