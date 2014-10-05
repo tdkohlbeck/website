@@ -18,16 +18,17 @@ window.onload = function() {
 }
 
 function triggerSidebar(code) {
-  var codeTextNode = createNode("pre");
-  codeTextNode.innerHTML = code;
+  //var codeTextNode = createNode("pre");
+  //codeTextNode.innerHTML = code;
   //codeTextNode.appendChild(document.createTextNode(code));
   createNode(
     "div", //element
     document.body, //parent
     "code_text animate_show_sidebar", //class
-    "sidebar", //id
-    codeTextNode //text node
+    "sidebar" //id
+    //codeTextNode //text node
   );  
+  id("sidebar").appendChild(code);
 }
 
 function parser(codeInput) {
@@ -35,6 +36,7 @@ function parser(codeInput) {
   var buffer = new Array();
   var bufferPos = 0;
   var codeOutput = new String(); //createNode("pre");
+  var outputNode = createNode("pre");
 
   for (i = 0; i < charCount; i++) {
     currChar = codeInput[i];
@@ -43,11 +45,20 @@ function parser(codeInput) {
       var codeWord = buffer.join("");
       
       if (C.variable.contains(codeWord)) {
-        codeWord = "<span class=\"syntax_var\">" + codeWord + "</span>";
-      } else if (C.logic.contains(codeWord)) {
-        codeWord = "<span class=\"syntax_logic\">" + codeWord + "</span>";
+        var text = document.createTextNode(codeOutput);
+        outputNode.appendChild(text);
+        var highlight = createNode("span");
+        highlight.className = "var";
+        var codeWord = document.createTextNode(codeWord + currChar);
+        highlight.appendChild(codeWord);
+        outputNode.appendChild(highlight); 
+        codeOutput = new String();
+      } else {
+      //} else if (C.logic.contains(codeWord)) {
+      //  codeWord = "<span class=\"logic\">" + codeWord + "</span>";
+      //}
+        codeOutput += codeWord + currChar; 
       }
-      codeOutput += codeWord + currChar; 
 
       buffer = [];
       bufferPos = 0;
@@ -56,7 +67,9 @@ function parser(codeInput) {
       bufferPos++;
     }
   } 
-  return codeOutput;
+  codeOutput = document.createTextNode(codeOutput);
+  outputNode.appendChild(codeOutput);
+  return outputNode;
 }
 
 function createNode(
@@ -96,6 +109,7 @@ function createNode(
   return 0;
 } 
 
+  
 function id(str) {
   return document.getElementById(str);
 }
