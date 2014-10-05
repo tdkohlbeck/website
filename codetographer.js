@@ -18,15 +18,11 @@ window.onload = function() {
 }
 
 function triggerSidebar(code) {
-  //var codeTextNode = createNode("pre");
-  //codeTextNode.innerHTML = code;
-  //codeTextNode.appendChild(document.createTextNode(code));
   createNode(
     "div", //element
     document.body, //parent
     "code_text animate_show_sidebar", //class
     "sidebar" //id
-    //codeTextNode //text node
   );  
   id("sidebar").appendChild(code);
 }
@@ -35,7 +31,7 @@ function parser(codeInput) {
   var charCount = codeInput.length;
   var buffer = new Array();
   var bufferPos = 0;
-  var codeOutput = new String(); //createNode("pre");
+  var codeOutput = new String();
   var outputNode = createNode("pre");
 
   for (i = 0; i < charCount; i++) {
@@ -50,10 +46,10 @@ function parser(codeInput) {
         highlight("logic", codeWord, currChar);
       } else if (codeWord.match(/[0-9]/)) {
         highlight("num", codeWord, currChar);
+      } else if (codeWord.startsWith('"') &&
+                 codeWord.endsWith('"')) {
+        highlight("string", codeWord, currChar);
       } else {
-      //} else if (C.logic.contains(codeWord)) {
-      //  codeWord = "<span class=\"logic\">" + codeWord + "</span>";
-      //}
         codeOutput += codeWord + currChar; 
       }
 
@@ -141,40 +137,3 @@ function TreeNode() {
   this.Child = new Array();
   this.Sibling = new Array();
 }  
-
-// Polyfill for array.contains()
-if (![].contains) {
-  Object.defineProperty(Array.prototype, 'contains', {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value: function(searchElement/*, fromIndex*/) {
-      if (this === undefined || this === null) {
-        throw new TypeError('Cannot convert this value to object');
-      }
-      var O = Object(this);
-      var len = parseInt(O.length) || 0;
-      if (len === 0) { return false; }
-      var n = parseInt(arguments[1]) || 0;
-      if (n >= len) { return false; }
-      var k;
-      if (n >= 0) {
-        k = n;
-      } else {
-        k = len + n;
-        if (k < 0) k = 0;
-      }
-      while (k < len) {
-        var currentElement = O[k];
-        if (searchElement === currentElement ||
-            searchElement !== searchElement &&
-            currentElement !== currentElement
-        ) {
-          return true;
-        }
-        k++;
-      }
-      return false;
-    }
-  });
-}
