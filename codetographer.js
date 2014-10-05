@@ -48,6 +48,8 @@ function parser(codeInput) {
         highlight("var", codeWord, currChar);
       } else if (C.logic.contains(codeWord)) {
         highlight("logic", codeWord, currChar);
+      } else if (codeWord.match(/[0-9]/)) {
+        highlight("num", codeWord, currChar);
       } else {
       //} else if (C.logic.contains(codeWord)) {
       //  codeWord = "<span class=\"logic\">" + codeWord + "</span>";
@@ -72,9 +74,10 @@ function parser(codeInput) {
     outputNode.appendChild(codeNode);
     var span = createNode("span");
     span.className = type;
-    var word = textNode(word + character);
+    var word = textNode(word);
     span.appendChild(word);
     outputNode.appendChild(span);
+    outputNode.appendChild(textNode(character));
     codeOutput = new String();
   }
 }
