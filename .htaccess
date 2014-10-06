@@ -1,18 +1,9 @@
-# Apache Rewrite Rules
- <IfModule mod_rewrite.c>
-  Options +FollowSymLinks
-  RewriteEngine On
-  RewriteBase /
+# example.com/page will display the contents of example.com/page.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L,QSA]
 
-# Add trailing slash to url
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5}|/|#(.*))$
-  RewriteRule ^(.*)$ $1/ [R=301,L]
-
-# Remove .html-extension from url
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.html -f
-  RewriteRule ^([^\.]+)/$ $1.html 
-
-# End of Apache Rewrite Rules
- </IfModule>
+# 301 from example.com/page.html to example.com/page
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*\.html\ HTTP/
+RewriteRule ^(.*)\.html$ /$1 [R=301,L]
